@@ -33,6 +33,7 @@ namespace ContactList.ViewModels
             }
             else
             {
+
                 var contact = new Person();
                 contact.FullName = FullName;
                 contact.PhoneNumber = PhoneNumber;
