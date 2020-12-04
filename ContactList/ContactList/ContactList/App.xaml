@@ -3,6 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ContactList.App">
     <Application.Resources>
+        <ResourceDictionary>
+            <Style x:Key="LabelTitleStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="Title"/>
+            </Style>
 
+            <Style x:Key="LabelDetailStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="FontSize" Value="Body"/>
+
+            </Style>
+
+
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="BackgroundColor" Value="DarkBlue"/>
+
+            </Style>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
