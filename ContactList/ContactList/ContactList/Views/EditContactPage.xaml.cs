@@ -12,7 +12,7 @@ namespace ContactList.Views
         public EditContactPage(Person person)
         {
             InitializeComponent();
-            this.BindingContext = new EditContactViewModel(person, new PersonService(), new NavigationPageService());
+            this.BindingContext = new EditContactViewModel(person, new PersonService(), new NavigationPageService(), new PageDialogService());
         }
     }
 }

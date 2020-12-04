@@ -9,11 +9,13 @@ namespace ContactList.ViewModels
     {
         readonly IPersonService personService;
         readonly INavigationPageService navigationPageService;
+        readonly IPageDialogService pageDialogService;
 
-        public AddContactViewModel(IPersonService personService, INavigationPageService navigationPageService)
+        public AddContactViewModel(IPersonService personService, INavigationPageService navigationPageService, IPageDialogService pageDialogService)
         {
             this.personService = personService;
             this.navigationPageService = navigationPageService;
+            this.pageDialogService = pageDialogService;
         }
 
         public string FullName { get; set; }
@@ -21,13 +23,25 @@ namespace ContactList.ViewModels
 
         public ICommand AddContactCommand => new Command(() => 
         {
-            var contact = new Person();
-            contact.FullName = FullName;
-            contact.PhoneNumber = PhoneNumber;
+            if (string.IsNullOrEmpty(FullName))
+            {
+                pageDialogService.DisplayAlert("Error", "Must complete with full name");
+            }
+            else if (string.IsNullOrEmpty(PhoneNumber))
+            {
+                pageDialogService.DisplayAlert("Error", "Must complete with phone number");
+            }
+            else
+            {
+                var contact = new Person();
+                contact.FullName = FullName;
+                contact.PhoneNumber = PhoneNumber;
 
-            personService.AddPerson(contact);
+                personService.AddPerson(contact);
 
-            navigationPageService.NavigationPagePop();
+                navigationPageService.NavigationPagePop();
+            }
+            
         });
     }
 }

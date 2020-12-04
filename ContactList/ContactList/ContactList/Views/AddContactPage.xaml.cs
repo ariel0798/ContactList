@@ -11,7 +11,7 @@ namespace ContactList.Views
         public AddContactPage()
         {
             InitializeComponent();
-            this.BindingContext = new AddContactViewModel(new PersonService(), new NavigationPageService());
+            this.BindingContext = new AddContactViewModel(new PersonService(), new NavigationPageService(), new PageDialogService());
         }
     }
 }
