@@ -20,10 +20,10 @@
                 </Grid.RowDefinitions>
 
                 <Label Text="Full Name" Style="{StaticResource LabelTitleStyle}" Grid.Column="0" Grid.Row="0"/>
-                <Label Text="{Binding FullName,Mode=TwoWay}" Style="{StaticResource LabelDetailStyle}"  Grid.Column="0" Grid.Row="1"/>
+                <Entry Text="{Binding FullName,Mode=TwoWay}" Style="{StaticResource LabelDetailStyle}"  Grid.Column="0" Grid.Row="1"/>
                 <Label Text="Phone Number"  Style="{StaticResource LabelTitleStyle}" Grid.Column="0" Grid.Row="2"/>
-                <Label Text="{Binding PhoneNumber,Mode=TwoWay}" Style="{StaticResource LabelDetailStyle}"  Grid.Column="0" Grid.Row="3"/>
-                <Button Text="Edit" Style="{StaticResource ButtonStyle}"  Command="{Binding EditContactCommand}" Grid.Column="0" Grid.Row="4" />
+                <Entry Text="{Binding PhoneNumber,Mode=TwoWay}" Style="{StaticResource LabelDetailStyle}"  Grid.Column="0" Grid.Row="3"/>
+                <Button Text="Edit" Style="{StaticResource ButtonStyle}"  Command="{Binding EditContactCommand}" Grid.Column="0" Grid.Row="4"/>
 
 
             </Grid>

@@ -11,22 +11,18 @@ namespace ContactList.ViewModels
 {
     public class ContactsViewModel : BaseViewModel
     {
-        public ContactsViewModel(INavigationPageService navigationPageService, IPersonService personService)
+        public ContactsViewModel(INavigationPageService navigationPageService, IPersonService personService, IPageDialogService pageDialogService)
         {
             this.navigationPageService = navigationPageService;
             this.personService = personService;
+            this.pageDialogService = pageDialogService;
 
-            ContactsList = new ObservableCollection<Person>();
-            ContactsList = personService.GetPeopleList();
-            //ContactsList = new List<Person>() { 
-            //    new Person{FullName= "Richard Cruz", PhoneNumber="809-901-5351"},
-            //    new Person{FullName= "Yeanny Castillo", PhoneNumber="809-797-5889"}
-
-            //};
+            Refresh();
         }
 
         readonly INavigationPageService navigationPageService;
         readonly IPersonService personService;
+        readonly IPageDialogService pageDialogService;
 
         Person selectedPerson;
 
@@ -47,32 +43,55 @@ namespace ContactList.ViewModels
 
         public ObservableCollection<Person> ContactsList { get; set; }
 
-        public ICommand AddContactCommand => new Command(() =>
+        public bool IsRefreshing { get; set; }
+        public bool IsEmptyData { get; set; }
+        
+
+        public ICommand AddContactCommand => new Command(async() =>
         {
-            navigationPageService.NavigationPagePush(new AddContactPage());
+            await navigationPageService.NavigationPagePush(new AddContactPage());
+            Refresh();
         });
 
         public ICommand DeleteContactCommand => new Command<Person>((person) =>
         {
             personService.DeletePerson(person);
+            Refresh();
         });
 
-        public ICommand EditContactCommand => new Command<Person>((person) =>
+        public ICommand MoreOptionsCommand => new Command<Person>(async (person) =>
         {
-            navigationPageService.NavigationPagePush(new EditContactPage(person));
+            string call = "Call " + person.PhoneNumber, edit = "Edit";
+            string action = await pageDialogService.DisplayActionSheet(call, edit);
+            if(action == call)
+            {
+                PhoneDialer.Open(person.PhoneNumber);
+            }
+            else if(action == edit)
+            {
+                await navigationPageService.NavigationPagePush(new EditContactPage(person));
+                Refresh();
+            }
         });
+        public ICommand RefreshCommand => 
+            new Command(() => Refresh());
 
-        public ICommand CallNumberCommand => new Command<Person>((person) =>
+        public void Refresh()
         {
-            PhoneDialer.Open(person.PhoneNumber);
-        });
+            IsRefreshing = true;
+            ContactsList = personService.GetPeopleList();
+
+            if (ContactsList.Count == 0)
+                IsEmptyData = true;
+            else
+                IsEmptyData = false;
+
+            IsRefreshing = false;
+        }
 
         public async Task ContactInformation(Person person)
         {
             await navigationPageService.NavigationPagePush(new ContactInformationPage(person));
-
         }
-
-
     }
 }
