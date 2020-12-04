@@ -22,7 +22,7 @@ After adding a couple of contacts, it looks like this
 
 # Contact information
 
-If you click one of them, you go the information of that contact
+If you click one of them, you go to the information of that contact
 
 ![](Images/ContactInformation.png)
 
