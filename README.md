@@ -32,7 +32,10 @@ Long press on Android and swipe on iOS
 
 ![](Images/DialogMenu.png)
 
-# Contect page options
+If delete is selected, it deletes de contact
+If more is selected, it opens a context page
+
+# Context page options
 
 ![](Images/MoreOptions.png)
 
