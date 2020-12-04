@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Helpers="clr-namespace:ContactList.Helpers"
+             x:Class="ContactList.Views.ContactsPage"
+
+             Title="Contacts"
+             x:Name="contactsPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" Text="Add" IconImageSource="add.png" Priority="0" Command="{Binding AddContactCommand}"/>
+    </ContentPage.ToolbarItems>
+    <StackLayout>
+        <ListView ItemsSource="{Binding ContactsList}" SelectedItem="{Binding SelectedPerson, Mode=TwoWay}" IsPullToRefreshEnabled="True" 
+                  IsRefreshing="{Binding IsRefreshing}" RefreshCommand="{Binding RefreshCommand}" 
+                  IsVisible="{Binding IsEmptyData, Converter={Helpers:InverseBoolConverter}}"
+                  HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell >
+                        <StackLayout>
+                            <Label Style="{StaticResource ViewCellTitle}" Text="{Binding FullName}"/>
+                            <Label Style="{StaticResource ViewCellDetail}" Text="{Binding PhoneNumber}"/>
+                        </StackLayout>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="More" Command="{Binding BindingContext.MoreOptionsCommand, Source={x:Reference contactsPage}}" 
+                                      IsDestructive="True" CommandParameter="{Binding}"/>
+                            <MenuItem Text="Delete" Command="{Binding BindingContext.DeleteContactCommand, Source={x:Reference contactsPage}}" 
+                                      IsDestructive="True" CommandParameter="{Binding}"/>
+                        </ViewCell.ContextActions>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+
+        <Image Source="blueUpArrow" Style="{StaticResource UpArrow}"  IsVisible="{Binding IsEmptyData}" />
+        <Label Style="{StaticResource UpArrowText}"  Text="Add contact " IsVisible="{Binding IsEmptyData}"/>
+        <ScrollView IsVisible="{Binding IsEmptyData}" >
+            
+            <Grid VerticalOptions="CenterAndExpand"
+                  HorizontalOptions="CenterAndExpand"
+                  Padding="50">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                
+                <Image Source="NoContacts" Style="{StaticResource EmptyPageImage}" Grid.Column="0" Grid.Row="0"/> 
+                <Label Style="{StaticResource LabelEmptyData}"  Text="No contacts" Grid.Column="0" Grid.Row="1"/>
+                <Button Text="Refresh" Style="{StaticResource ButtonStyle}" Command="{Binding RefreshCommand}" Grid.Column="0" Grid.Row="2"/>
+
+            </Grid>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>

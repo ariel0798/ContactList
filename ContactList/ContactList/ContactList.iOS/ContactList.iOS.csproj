@@ -133,4 +133,16 @@
       <Name>ContactList</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\contact.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\NoContacts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\blueUpArrow.png" />
+  </ItemGroup>
 </Project>
